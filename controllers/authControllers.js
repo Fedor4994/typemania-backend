@@ -1,16 +1,20 @@
 import { getCurrentUser, login, register } from "../services/authService.js";
 
 export const registerController = async (req, res, next) => {
-  const data = await register(req.body);
-  data
-    ? res.status(201).json({
-        user: {
-          name: data.newUser.name,
-          email: data.newUser.email,
-        },
-        token: data.token,
-      })
-    : res.status(409).json({ message: "Email in use" });
+  try {
+    const data = await register(req.body);
+    data
+      ? res.status(201).json({
+          user: {
+            name: data.newUser.name,
+            email: data.newUser.email,
+          },
+          token: data.token,
+        })
+      : res.status(409).json({ message: "Email in use" });
+  } catch (error) {
+    next(err);
+  }
 };
 
 export const loginController = async (req, res, next) => {
@@ -34,16 +38,20 @@ export const loginController = async (req, res, next) => {
 };
 
 export const getCurrentUserController = async (req, res, next) => {
-  const user = await getCurrentUser(req.user);
+  try {
+    const user = await getCurrentUser(req.user);
 
-  user
-    ? res.status(200).json({
-        user: {
-          name: user.name,
-          email: user.email,
-        },
-      })
-    : res.status(401).json({
-        message: "Not authorized",
-      });
+    user
+      ? res.status(200).json({
+          user: {
+            name: user.name,
+            email: user.email,
+          },
+        })
+      : res.status(401).json({
+          message: "Not authorized",
+        });
+  } catch (error) {
+    next(err);
+  }
 };
