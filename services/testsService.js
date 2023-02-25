@@ -11,11 +11,12 @@ export const getTestById = async (testId, userId) => {
 };
 
 export const addTest = async (body, userId) => {
-  const { wpm, accuracy, time } = body;
+  const { wpm, accuracy, time, testType } = body;
   const newTest = new Test({
     wpm,
     accuracy,
     time,
+    testType,
     userId,
   });
 

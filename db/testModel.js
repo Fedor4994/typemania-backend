@@ -16,6 +16,10 @@ const testSchema = new Schema(
       type: Number,
       required: [true, "Time is required"],
     },
+    testType: {
+      type: String,
+      required: [true, "testType is required"],
+    },
     userId: {
       type: mongoose.SchemaTypes.ObjectId,
     },
