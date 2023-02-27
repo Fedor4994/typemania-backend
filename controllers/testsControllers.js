@@ -2,7 +2,10 @@ import { listTests, getTestById, addTest } from "../services/testsService.js";
 
 export const getAllTestsController = async (req, res, next) => {
   try {
-    const tests = await listTests(req.user._id);
+    const { page, limit } = req.query;
+    const { _id } = req.user;
+
+    const tests = await listTests(_id, page, limit);
     res.json(tests);
   } catch (error) {
     next(error);

@@ -1,7 +1,17 @@
 import { Test } from "../db/testModel.js";
 
-export const listTests = async (userId) => {
-  const tests = await Test.find({ userId });
+export const listTests = async (
+  userId,
+  page = "1",
+  limit = "10",
+  sort = -1
+) => {
+  const skipCount = (page - 1) * limit;
+
+  const tests = await Test.find({ userId })
+    .limit(limit)
+    .skip(skipCount)
+    .sort({ createdAt: sort });
   return tests;
 };
 
