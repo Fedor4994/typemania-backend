@@ -1,4 +1,9 @@
-import { listTests, getTestById, addTest } from "../services/testsService.js";
+import {
+  listTests,
+  getTestById,
+  addTest,
+  testsDetails,
+} from "../services/testsService.js";
 
 export const getAllTestsController = async (req, res, next) => {
   try {
@@ -7,6 +12,17 @@ export const getAllTestsController = async (req, res, next) => {
 
     const tests = await listTests(_id, page, limit, sort);
     res.json(tests);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getTestsDetailsController = async (req, res, next) => {
+  try {
+    const { _id } = req.user;
+    const data = await testsDetails(_id);
+
+    res.json(data);
   } catch (error) {
     next(error);
   }

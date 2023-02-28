@@ -1,4 +1,5 @@
 import { Test } from "../db/testModel.js";
+import { getTestsDetails } from "../helpers/testsDetails.js";
 
 export const listTests = async (
   userId,
@@ -13,6 +14,12 @@ export const listTests = async (
     .skip(skipCount)
     .sort({ createdAt: sort });
   return tests;
+};
+
+export const testsDetails = async (userId) => {
+  const allTests = await Test.find({ userId });
+
+  return getTestsDetails(allTests);
 };
 
 export const getTestById = async (testId, userId) => {

@@ -2,7 +2,7 @@ import express from "express";
 import {
   loginController,
   registerController,
-  getCurrentUserController
+  getCurrentUserController,
 } from "../controllers/authControllers.js";
 import { authMiddleware } from "../middlewares/authMiddleware.js";
 import {
