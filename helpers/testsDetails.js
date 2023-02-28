@@ -1,4 +1,4 @@
-import { convertMs } from "./timeConventer.js";
+import { convertMs, toHHMMSS } from "./timeConventer.js";
 
 export const getTestsDetails = (allTests) => {
   const timerFifteen = allTests.filter(
@@ -29,7 +29,7 @@ export const getTestsDetails = (allTests) => {
 
   return {
     testCompleted: allTests.length,
-    timeSpended: convertMs(totalSeconds * 1000),
+    timeSpended: toHHMMSS(totalSeconds),
     topWpm: Math.max(...allTests.map((test) => test.wpm)),
     averageWpm: +(
       allTests.reduce((acc, test) => acc + test.wpm, 0) / allTests.length
