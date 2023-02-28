@@ -1,4 +1,4 @@
-import { convertMs, toHHMMSS } from "./timeConventer.js";
+import { toHHMMSS } from "./timeConventer.js";
 
 export const getTestsDetails = (allTests) => {
   const timerFifteen = allTests.filter(
