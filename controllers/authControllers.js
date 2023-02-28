@@ -8,6 +8,7 @@ export const registerController = async (req, res, next) => {
           user: {
             name: data.newUser.name,
             email: data.newUser.email,
+            createdAt: data.newUser.createdAt,
           },
           token: data.token,
         })
@@ -26,6 +27,7 @@ export const loginController = async (req, res, next) => {
           user: {
             name: data.user.name,
             email: data.user.email,
+            createdAt: data.user.createdAt,
           },
           token: data.token,
         })
@@ -46,6 +48,7 @@ export const getCurrentUserController = async (req, res, next) => {
           user: {
             name: user.name,
             email: user.email,
+            createdAt: user.createdAt,
           },
         })
       : res.status(401).json({
