@@ -1,4 +1,10 @@
-import { getCurrentUser, login, register } from "../services/authService.js";
+import {
+  getCurrentUser,
+  login,
+  register,
+  getLeaderboard,
+  getLeaderboardPlace,
+} from "../services/authService.js";
 
 export const registerController = async (req, res, next) => {
   try {
@@ -9,6 +15,7 @@ export const registerController = async (req, res, next) => {
             name: data.newUser.name,
             email: data.newUser.email,
             createdAt: data.newUser.createdAt,
+            id: data.newUser._id,
           },
           token: data.token,
         })
@@ -28,6 +35,7 @@ export const loginController = async (req, res, next) => {
             name: data.user.name,
             email: data.user.email,
             createdAt: data.user.createdAt,
+            id: data.user._id,
           },
           token: data.token,
         })
@@ -49,8 +57,32 @@ export const getCurrentUserController = async (req, res, next) => {
             name: user.name,
             email: user.email,
             createdAt: user.createdAt,
+            id: user._id,
           },
         })
+      : res.status(401).json({
+          message: "Not authorized",
+        });
+  } catch (error) {
+    next(err);
+  }
+};
+
+export const getLeaderboardController = async (req, res, next) => {
+  try {
+    const leaderboard = await getLeaderboard();
+    res.json(leaderboard);
+  } catch (error) {
+    next(err);
+  }
+};
+
+export const getLeaderboardPlaceController = async (req, res, next) => {
+  try {
+    const leaderboard = await getLeaderboard();
+    const place = await getLeaderboardPlace(req.user, leaderboard);
+    place
+      ? res.json({ place })
       : res.status(401).json({
           message: "Not authorized",
         });

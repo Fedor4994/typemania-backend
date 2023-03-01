@@ -3,6 +3,8 @@ import {
   loginController,
   registerController,
   getCurrentUserController,
+  getLeaderboardController,
+  getLeaderboardPlaceController,
 } from "../controllers/authControllers.js";
 import { authMiddleware } from "../middlewares/authMiddleware.js";
 import {
@@ -15,5 +17,7 @@ const router = express.Router();
 router.post("/register", registerValidation, registerController);
 router.post("/login", loginValidation, loginController);
 router.get("/current", authMiddleware, getCurrentUserController);
+router.get("/leaderboard", getLeaderboardController);
+router.get("/leaderboard/place", authMiddleware, getLeaderboardPlaceController);
 
 export default router;

@@ -1,6 +1,7 @@
 import { User } from "../db/userModel.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { Test } from "../db/testModel.js";
 
 export const register = async ({ name, email, password }) => {
   const user = await User.findOne({ email });
@@ -52,4 +53,36 @@ export const getCurrentUser = async ({ _id }) => {
   }
 
   return user;
+};
+
+export const getLeaderboard = async () => {
+  const users = await User.find();
+  const bests = [];
+
+  for (const user of users) {
+    const userGames = await Test.find({ userId: user._id });
+    bests.push({
+      user,
+      bestsRecord: Math.max(...userGames.map((test) => test.wpm)),
+    });
+  }
+
+  bests.sort((a, b) => (a.bestsRecord < b.bestsRecord ? 1 : -1));
+
+  return bests;
+};
+
+export const getLeaderboardPlace = async ({ _id }, leaderboard) => {
+  const user = await User.findOne({ _id });
+
+  if (!user) {
+    return false;
+  }
+
+  let leaderboardPlace = 0;
+  leaderboard.forEach((position, index) => {
+    if (position.user.email === user.email) leaderboardPlace = index + 1;
+  });
+
+  return leaderboardPlace;
 };
