@@ -71,7 +71,8 @@ export const getCurrentUserController = async (req, res, next) => {
 export const getLeaderboardController = async (req, res, next) => {
   try {
     const leaderboard = await getLeaderboard();
-    res.json(leaderboard);
+
+    res.json(leaderboard.slice(0, 10));
   } catch (error) {
     next(err);
   }
