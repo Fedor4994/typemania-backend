@@ -41,6 +41,8 @@ export const addTestValidation = (req, res, next) => {
     accuracy: Joi.number().required(),
     time: Joi.number().required(),
     testType: Joi.string().required(),
+    language: Joi.string().required(),
+    isHardcore: Joi.boolean().required(),
   });
 
   const { error } = schema.validate(req.body);

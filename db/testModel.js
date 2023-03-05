@@ -20,6 +20,14 @@ const testSchema = new Schema(
       type: String,
       required: [true, "testType is required"],
     },
+    language: {
+      type: String,
+      required: [true, "language is required"],
+    },
+    isHardcore: {
+      type: Boolean,
+      required: [true, "isHardcore field is required"],
+    },
     userId: {
       type: mongoose.SchemaTypes.ObjectId,
     },
