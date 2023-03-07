@@ -2,6 +2,7 @@ import {
   getCurrentUser,
   login,
   register,
+  getUserById,
   getLeaderboard,
   getLeaderboardPlace,
 } from "../services/authService.js";
@@ -65,6 +66,15 @@ export const getCurrentUserController = async (req, res, next) => {
         });
   } catch (error) {
     next(err);
+  }
+};
+
+export const getUserByIdController = async (req, res, next) => {
+  try {
+    const user = await getUserById(req.params.userId);
+    user ? res.json(user) : res.status(404).json({ message: "Not found" });
+  } catch (error) {
+    next(error);
   }
 };
 

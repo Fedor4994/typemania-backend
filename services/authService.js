@@ -55,6 +55,11 @@ export const getCurrentUser = async ({ _id }) => {
   return user;
 };
 
+export const getUserById = async (userId) => {
+  const user = await User.findOne({ _id: userId });
+  return user;
+};
+
 export const getLeaderboard = async () => {
   const users = await User.find();
   const bests = [];
