@@ -19,8 +19,8 @@ export const getAllTestsController = async (req, res, next) => {
 
 export const getTestsDetailsController = async (req, res, next) => {
   try {
-    const { _id } = req.user;
-    const data = await testsDetails(_id);
+    const { userId } = req.params;
+    const data = await testsDetails(userId);
 
     res.json(data);
   } catch (error) {
