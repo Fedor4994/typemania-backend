@@ -91,13 +91,10 @@ export const getLeaderboardController = async (req, res, next) => {
 export const getLeaderboardPlaceController = async (req, res, next) => {
   try {
     const leaderboard = await getLeaderboard();
-    const place = await getLeaderboardPlace(req.user, leaderboard);
-    place
-      ? res.json({ place })
-      : res.status(401).json({
-          message: "Not authorized",
-        });
+    const place = await getLeaderboardPlace(req.params.userId, leaderboard);
+
+    res.json({ place });
   } catch (error) {
-    next(err);
+    next(error);
   }
 };

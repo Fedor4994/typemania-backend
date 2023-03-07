@@ -77,12 +77,8 @@ export const getLeaderboard = async () => {
   return bests;
 };
 
-export const getLeaderboardPlace = async ({ _id }, leaderboard) => {
-  const user = await User.findOne({ _id });
-
-  if (!user) {
-    return false;
-  }
+export const getLeaderboardPlace = async (userId, leaderboard) => {
+  const user = await User.findById(userId);
 
   let leaderboardPlace = 0;
   leaderboard.forEach((position, index) => {

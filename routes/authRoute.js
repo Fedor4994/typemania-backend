@@ -20,7 +20,7 @@ router.post("/login", loginValidation, loginController);
 router.get("/current", authMiddleware, getCurrentUserController);
 
 router.get("/leaderboard", getLeaderboardController);
-router.get("/leaderboard/place", authMiddleware, getLeaderboardPlaceController);
+router.get("/leaderboard/place/:userId", getLeaderboardPlaceController);
 router.get("/leaderboard/list/:userId", getUserByIdController);
 
 export default router;
