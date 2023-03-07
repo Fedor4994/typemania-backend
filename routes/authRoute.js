@@ -19,8 +19,8 @@ router.post("/register", registerValidation, registerController);
 router.post("/login", loginValidation, loginController);
 router.get("/current", authMiddleware, getCurrentUserController);
 
-router.get("/leaderboard/:userId", getUserByIdController);
 router.get("/leaderboard", getLeaderboardController);
 router.get("/leaderboard/place", authMiddleware, getLeaderboardPlaceController);
+router.get("/leaderboard/list/:userId", getUserByIdController);
 
 export default router;
