@@ -3,6 +3,7 @@ import {
   login,
   register,
   getUserById,
+  updateUserName,
   getLeaderboard,
   getLeaderboardPlace,
 } from "../services/authService.js";
@@ -66,6 +67,15 @@ export const getCurrentUserController = async (req, res, next) => {
         });
   } catch (error) {
     next(err);
+  }
+};
+
+export const updateUserNameController = async (req, res, next) => {
+  try {
+    const updatedUser = await updateUserName(req.user._id, req.body.name);
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    next(error);
   }
 };
 

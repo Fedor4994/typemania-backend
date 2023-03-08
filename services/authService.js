@@ -60,6 +60,15 @@ export const getUserById = async (userId) => {
   return user;
 };
 
+export const updateUserName = async (userId, newName) => {
+  const updatedUser = await User.findOneAndUpdate(
+    { _id: userId },
+    { name: newName },
+    { new: true }
+  );
+  return updatedUser;
+};
+
 export const getLeaderboard = async () => {
   const users = await User.find();
   const bests = [];
