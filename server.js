@@ -1,7 +1,7 @@
 import app from "./app.js";
 import connection from "./db/connection.js";
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8080;
 
 connection
   .then(() => {
