@@ -66,6 +66,8 @@ export const updateUserName = async (userId, newName) => {
     { name: newName },
     { new: true }
   );
+
+  console.log(updatedUser);
   return updatedUser;
 };
 

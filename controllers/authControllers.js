@@ -75,7 +75,7 @@ export const updateUserNameController = async (req, res, next) => {
     const updatedUser = await updateUserName(req.user._id, req.body.name);
     res.status(200).json(updatedUser);
   } catch (error) {
-    next(error);
+    res.status(409).json({ message: "Name in use" });
   }
 };
 
