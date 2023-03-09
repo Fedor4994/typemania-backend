@@ -17,13 +17,14 @@ export const registerController = async (req, res, next) => {
             name: data.newUser.name,
             email: data.newUser.email,
             createdAt: data.newUser.createdAt,
+            avatarURL: data.newUser.avatarURL,
             _id: data.newUser._id,
           },
           token: data.token,
         })
       : res.status(409).json({ message: "Email in use" });
   } catch (error) {
-    next(err);
+    next(error);
   }
 };
 
@@ -37,6 +38,7 @@ export const loginController = async (req, res, next) => {
             name: data.user.name,
             email: data.user.email,
             createdAt: data.user.createdAt,
+            avatarURL: data.user.avatarURL,
             _id: data.user._id,
           },
           token: data.token,
@@ -59,6 +61,7 @@ export const getCurrentUserController = async (req, res, next) => {
             name: user.name,
             email: user.email,
             createdAt: user.createdAt,
+            avatarURL: user.avatarURL,
             _id: user._id,
           },
         })
@@ -66,7 +69,7 @@ export const getCurrentUserController = async (req, res, next) => {
           message: "Not authorized",
         });
   } catch (error) {
-    next(err);
+    next(error);
   }
 };
 
@@ -94,7 +97,7 @@ export const getLeaderboardController = async (req, res, next) => {
 
     res.json(leaderboard.slice(0, 10));
   } catch (error) {
-    next(err);
+    next(error);
   }
 };
 

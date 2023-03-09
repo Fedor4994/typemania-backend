@@ -2,6 +2,8 @@ import { User } from "../db/userModel.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { Test } from "../db/testModel.js";
+import { AvatarGenerator } from "random-avatar-generator";
+const generator = new AvatarGenerator();
 
 export const register = async ({ name, email, password }) => {
   const user = await User.findOne({ email });
@@ -10,7 +12,9 @@ export const register = async ({ name, email, password }) => {
     return false;
   }
 
-  const newUser = new User({ name, email, password });
+  const avatarURL = generator.generateRandomAvatar();
+  const newUser = new User({ name, email, password, avatarURL });
+
   await newUser.save();
 
   const token = jwt.sign(

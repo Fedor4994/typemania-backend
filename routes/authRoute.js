@@ -8,7 +8,9 @@ import {
   getUserByIdController,
   updateUserNameController,
 } from "../controllers/authControllers.js";
+import { uploadController } from "../controllers/filesControllers.js";
 import { authMiddleware } from "../middlewares/authMiddleware.js";
+import { uploadMiddleware } from "../middlewares/filesMiddleware.js";
 import {
   loginValidation,
   registerValidation,
@@ -25,6 +27,12 @@ router.patch(
   authMiddleware,
   updateUserNameValidation,
   updateUserNameController
+);
+router.patch(
+  "/avatars",
+  authMiddleware,
+  uploadMiddleware.single("avatar"),
+  uploadController
 );
 
 router.get("/leaderboard", getLeaderboardController);
