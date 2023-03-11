@@ -28,6 +28,19 @@ const testSchema = new Schema(
       type: Boolean,
       required: [true, "isHardcore field is required"],
     },
+    isHardcore: {
+      type: Boolean,
+      required: [true, "isHardcore field is required"],
+    },
+    record: {
+      type: [
+        {
+          timestamp: Number,
+          char: String,
+        },
+      ],
+      required: true,
+    },
     userId: {
       type: mongoose.SchemaTypes.ObjectId,
     },
