@@ -43,6 +43,7 @@ export const addTestValidation = (req, res, next) => {
     testType: Joi.string().required(),
     language: Joi.string().required(),
     isHardcore: Joi.boolean().required(),
+    text: Joi.string().required(),
     record: Joi.array().required(),
   });
 

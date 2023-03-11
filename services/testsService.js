@@ -28,7 +28,8 @@ export const getTestById = async (testId, userId) => {
 };
 
 export const addTest = async (body, userId) => {
-  const { wpm, accuracy, time, testType, language, isHardcore, record } = body;
+  const { wpm, accuracy, time, testType, language, isHardcore, text, record } =
+    body;
   const newTest = new Test({
     wpm,
     accuracy,
@@ -37,6 +38,7 @@ export const addTest = async (body, userId) => {
     language,
     isHardcore,
     userId,
+    text,
     record,
   });
 

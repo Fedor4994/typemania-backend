@@ -32,6 +32,10 @@ const testSchema = new Schema(
       type: Boolean,
       required: [true, "isHardcore field is required"],
     },
+    text: {
+      type: String,
+      required: [true, "text is required"],
+    },
     record: {
       type: [
         {
