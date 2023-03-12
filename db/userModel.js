@@ -128,6 +128,10 @@ const userSchema = new Schema(
         type: Boolean,
         default: false,
       },
+      time1h: {
+        type: Boolean,
+        default: false,
+      },
       time6h: {
         type: Boolean,
         default: false,
