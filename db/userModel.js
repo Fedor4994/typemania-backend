@@ -32,6 +32,10 @@ const userSchema = new Schema(
         type: Boolean,
         default: false,
       },
+      speed50: {
+        type: Boolean,
+        default: false,
+      },
       speed70: {
         type: Boolean,
         default: false,
