@@ -102,3 +102,25 @@ export const getLeaderboardPlace = async (userId, leaderboard) => {
 
   return leaderboardPlace;
 };
+
+export const getAchievements = async (userId) => {
+  const user = await User.findById(userId);
+
+  if (!user) {
+    return false;
+  }
+
+  return user.achievements;
+};
+
+export const changeUserAchievements = async (userId, achievementName) => {
+  const oldAchievements = await getAchievements(userId);
+  oldAchievements[achievementName] = true;
+
+  await User.findByIdAndUpdate(userId, {
+    achievements: oldAchievements,
+  });
+
+  return oldAchievements;
+};
+

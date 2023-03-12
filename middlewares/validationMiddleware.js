@@ -73,3 +73,19 @@ export const updateUserNameValidation = (req, res, next) => {
 
   next();
 };
+
+export const changeUserAchievementsValidation = (req, res, next) => {
+  const schema = Joi.object({
+    achievementName: Joi.string().required(),
+  });
+
+  const { error } = schema.validate(req.body);
+
+  if (error) {
+    return res.status(400).json({
+      message: error.message,
+    });
+  }
+
+  next();
+};

@@ -6,6 +6,8 @@ import {
   updateUserName,
   getLeaderboard,
   getLeaderboardPlace,
+  getAchievements,
+  changeUserAchievements,
 } from "../services/authService.js";
 
 export const registerController = async (req, res, next) => {
@@ -107,6 +109,33 @@ export const getLeaderboardPlaceController = async (req, res, next) => {
     const place = await getLeaderboardPlace(req.params.userId, leaderboard);
 
     res.json({ place });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getAchievementsController = async (req, res, next) => {
+  try {
+    const achievements = await getAchievements(req.params.userId);
+
+    achievements
+      ? res.json(achievements)
+      : res.status(400).json({ message: "user not found" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const changeUserAchievementsController = async (req, res, next) => {
+  try {
+    const achievements = await changeUserAchievements(
+      req.user._id,
+      req.body.achievementName
+    );
+
+    achievements
+      ? res.json(achievements)
+      : res.status(400).json({ message: "user not found" });
   } catch (error) {
     next(error);
   }

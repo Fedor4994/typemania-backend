@@ -7,11 +7,14 @@ import {
   getLeaderboardPlaceController,
   getUserByIdController,
   updateUserNameController,
+  getAchievementsController,
+  changeUserAchievementsController,
 } from "../controllers/authControllers.js";
 import { uploadController } from "../controllers/filesControllers.js";
 import { authMiddleware } from "../middlewares/authMiddleware.js";
 import { uploadMiddleware } from "../middlewares/filesMiddleware.js";
 import {
+  changeUserAchievementsValidation,
   loginValidation,
   registerValidation,
   updateUserNameValidation,
@@ -38,5 +41,13 @@ router.patch(
 router.get("/leaderboard", getLeaderboardController);
 router.get("/leaderboard/place/:userId", getLeaderboardPlaceController);
 router.get("/leaderboard/list/:userId", getUserByIdController);
+
+router.get("/achievemets/:userId", getAchievementsController);
+router.put(
+  "/achievemets",
+  authMiddleware,
+  changeUserAchievementsValidation,
+  changeUserAchievementsController
+);
 
 export default router;
