@@ -8,6 +8,8 @@ import {
   getLeaderboardPlace,
   getAchievements,
   changeUserAchievements,
+  verification,
+  resendEmail,
 } from "../services/authService.js";
 
 export const registerController = async (req, res, next) => {
@@ -20,6 +22,7 @@ export const registerController = async (req, res, next) => {
             email: data.newUser.email,
             createdAt: data.newUser.createdAt,
             avatarURL: data.newUser.avatarURL,
+            verify: data.newUser.verify,
             _id: data.newUser._id,
           },
           token: data.token,
@@ -41,6 +44,7 @@ export const loginController = async (req, res, next) => {
             email: data.user.email,
             createdAt: data.user.createdAt,
             avatarURL: data.user.avatarURL,
+            verify: data.user.verify,
             _id: data.user._id,
           },
           token: data.token,
@@ -64,12 +68,37 @@ export const getCurrentUserController = async (req, res, next) => {
             email: user.email,
             createdAt: user.createdAt,
             avatarURL: user.avatarURL,
+            verify: user.verify,
             _id: user._id,
           },
         })
       : res.status(401).json({
           message: "Not authorized",
         });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const verifyController = async (req, res, next) => {
+  try {
+    const verify = await verification(req.params.verificationToken);
+    verify
+      ? res.sendFile("/templates/success-verificatoin.html", { root: "." })
+      : res
+          .status(404)
+          .sendFile("/templates/failed-verification.html", { root: "." });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const resendEmailController = async (req, res, next) => {
+  try {
+    const verify = await resendEmail(req.body.email);
+    verify
+      ? res.json({ message: "Email send success" })
+      : res.status(404).json({ message: "Email send failed" });
   } catch (error) {
     next(error);
   }

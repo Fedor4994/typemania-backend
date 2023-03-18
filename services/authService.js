@@ -3,6 +3,8 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { Test } from "../db/testModel.js";
 import { AvatarGenerator } from "random-avatar-generator";
+import { nanoid } from "nanoid";
+import { sendEmail } from "../helpers/sendEmail.js";
 const generator = new AvatarGenerator();
 
 export const register = async ({ name, email, password }) => {
@@ -13,9 +15,27 @@ export const register = async ({ name, email, password }) => {
   }
 
   const avatarURL = generator.generateRandomAvatar();
-  const newUser = new User({ name, email, password, avatarURL });
+  const verificationToken = nanoid();
 
+  const newUser = new User({
+    name,
+    email,
+    password,
+    avatarURL,
+    verificationToken,
+  });
   await newUser.save();
+
+  const mail = {
+    to: email,
+    templateId: "d-0792a028ec3c45408c0395a888612161",
+    dynamic_template_data: {
+      name,
+      verificationLink: `https://typemania.fly.dev/api/users/verify/${verificationToken}`,
+    },
+  };
+
+  await sendEmail(mail);
 
   const token = jwt.sign(
     {
@@ -57,6 +77,40 @@ export const getCurrentUser = async ({ _id }) => {
   }
 
   return user;
+};
+
+export const verification = async (verificationToken) => {
+  const user = await User.findOne({ verificationToken });
+
+  if (!user) {
+    return false;
+  }
+
+  await User.findByIdAndUpdate(user._id, {
+    verify: true,
+    verificationToken: "",
+  });
+  return true;
+};
+
+export const resendEmail = async (email) => {
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    return false;
+  }
+
+  const mail = {
+    to: email,
+    templateId: "d-0792a028ec3c45408c0395a888612161",
+    dynamic_template_data: {
+      name: user.name,
+      verificationLink: `https://typemania.fly.dev/api/users/verify/${user.verificationToken}`,
+    },
+  };
+
+  await sendEmail(mail);
+  return true;
 };
 
 export const getUserById = async (userId) => {
@@ -123,4 +177,3 @@ export const changeUserAchievements = async (userId, achievementName) => {
 
   return oldAchievements;
 };
-

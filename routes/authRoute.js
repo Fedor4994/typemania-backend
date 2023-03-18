@@ -3,6 +3,8 @@ import {
   loginController,
   registerController,
   getCurrentUserController,
+  verifyController,
+  resendEmailController,
   getLeaderboardController,
   getLeaderboardPlaceController,
   getUserByIdController,
@@ -17,6 +19,7 @@ import {
   changeUserAchievementsValidation,
   loginValidation,
   registerValidation,
+  resendEmailValidation,
   updateUserNameValidation,
 } from "../middlewares/validationMiddleware.js";
 
@@ -25,6 +28,8 @@ const router = express.Router();
 router.post("/register", registerValidation, registerController);
 router.post("/login", loginValidation, loginController);
 router.get("/current", authMiddleware, getCurrentUserController);
+router.get("/verify/:verificationToken", verifyController);
+router.post("/verify", resendEmailValidation, resendEmailController);
 router.patch(
   "/name",
   authMiddleware,
