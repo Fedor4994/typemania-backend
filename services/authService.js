@@ -125,7 +125,6 @@ export const updateUserName = async (userId, newName) => {
     { new: true }
   );
 
-  console.log(updatedUser);
   return updatedUser;
 };
 

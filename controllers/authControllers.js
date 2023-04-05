@@ -23,6 +23,10 @@ export const registerController = async (req, res, next) => {
             createdAt: data.newUser.createdAt,
             avatarURL: data.newUser.avatarURL,
             verify: data.newUser.verify,
+            isPartyLeader: data.newUser.isPartyLeader,
+            isFinishGame: data.newUser.isFinishGame,
+
+            currentWordIndex: data.newUser.currentWordIndex,
             _id: data.newUser._id,
           },
           token: data.token,
@@ -45,6 +49,10 @@ export const loginController = async (req, res, next) => {
             createdAt: data.user.createdAt,
             avatarURL: data.user.avatarURL,
             verify: data.user.verify,
+            isPartyLeader: data.user.isPartyLeader,
+            isFinishGame: data.user.isFinishGame,
+
+            currentWordIndex: data.user.currentWordIndex,
             _id: data.user._id,
           },
           token: data.token,
@@ -69,6 +77,10 @@ export const getCurrentUserController = async (req, res, next) => {
             createdAt: user.createdAt,
             avatarURL: user.avatarURL,
             verify: user.verify,
+            isPartyLeader: user.isPartyLeader,
+            isFinishGame: user.isFinishGame,
+
+            currentWordIndex: user.currentWordIndex,
             _id: user._id,
           },
         })

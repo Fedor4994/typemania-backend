@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema(
+export const userSchema = new Schema(
   {
     name: {
       type: String,
@@ -30,6 +30,19 @@ const userSchema = new Schema(
     verificationToken: {
       type: String,
       required: [true, "Verify token is required"],
+    },
+
+    isPartyLeader: {
+      type: Boolean,
+      default: false,
+    },
+    isFinishGame: {
+      type: Boolean,
+      default: false,
+    },
+    currentWordIndex: {
+      type: Number,
+      default: 0,
     },
     achievements: {
       speed10: {
