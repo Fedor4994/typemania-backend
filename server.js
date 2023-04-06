@@ -171,6 +171,10 @@ io.on("connection", (socket) => {
   socket.on("NEXT_GAME_SECONDARY", () => {
     usedUserId = "";
   });
+
+  socket.on("CHAT_MESSAGE", ({ user, gameID, message }) => {
+    io.to(gameID).emit("UPDATE_CHAT", { user, message });
+  });
 });
 
 connection
